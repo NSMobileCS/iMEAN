@@ -1,7 +1,7 @@
 {
-  "name": "exam1",
-  "version": "1.0.0",
-  "description": "survey polls app on mean stack",
+  "name": "exam",
+  "version": "0.0.7",
+  "description": "app on mean stack",
   "main": "server.js",
   "scripts": {
     "test": "echo \"THIS MY M-F-ing TEST COMMAND!\"",
