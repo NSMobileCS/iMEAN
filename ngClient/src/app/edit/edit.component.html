@@ -1,3 +1,34 @@
-<p>
-  edit works!
-</p>
+<h3>
+  <a [routerLink]="['/items']">Back to dashboard</a>
+</h3>
+
+<h4>
+  {{ item.item_name }}
+</h4>
+<table>
+  <tr>
+    <td>
+      Description
+    </td>
+    <td>
+      {{item.description}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Added by
+    </td>
+    <td>
+      {{ item.added_by }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Quantity
+    </td>
+    <td>
+      {{ item.quantity }}
+    </td>
+  </tr>
+
+</table>

@@ -1,12 +1,12 @@
-const appointments = require("../controllers/appointments");
+const controller  = require("../controllers/controller");
 
 module.exports = function (app) {
-    app.post("/login", appointments.login);
-    app.get("/login", appointments.checkLogin);
-    app.get("/logout", appointments.logout);
+    app.post("/login", controller.login);
+    app.get("/login", controller.checkLogin);
+    app.post("/logout", controller.logout);
 
-    app.get("/appointments", appointments.getAllAppointments);
-    app.post("/addnew", appointments.addNewAppt);
-    app.post("/appointments/destroy/:id", appointments.deleteAppt);
-
+    app.get("/items", controller.getAllItems);
+    app.post("/items/new", controller.addNewItem);
+    app.get("/items/:id", controller.singleItem);
+    app.post("/items/destroy/:id", controller.deleteItem);
 }

@@ -1,3 +1,57 @@
-<p>
-  dashboard works!
-</p>
+<h2>Dashboard</h2>
+<h3 *ngIf="user.username">
+  Signed in as {{ user.username }}
+</h3>
+<button (click)='userLogout()'>
+  sign out
+</button>
+
+
+<table>
+  <tr>
+    <th>Item Name</th>
+    <th>Posted by</th>
+    <th>Description</th>
+    <th>Date Modified</th>
+    <th>Date Added</th>
+    <th>Quantity</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let item of itemList">
+    <td>
+        <a [routerLink]="['/items', item._id]">
+          {{ item.item_name }}
+        </a>
+    </td>
+    <td>
+       {{ item.added_by }}
+    </td>
+    <td>
+      {{ item.description }}
+    </td>
+    <td>
+      {{ item.updatedAt | date:'short' }}
+    </td>
+    <td>
+        {{ item.createdAt | date:'short' }}
+    </td>
+    <td>
+      <p *ngIf="user.username == item.added_by">
+        <button (click)="deleteItem(item._id)">
+          Delete Poll
+        </button>
+      </p>
+    </td>
+    <td>
+      {{ item.count }}
+    </td>
+  </tr>
+</table>
+
+<h3>
+  <a [routerLink]="['/items', 'new', user.username]">
+    <button>
+      add new item
+    </button>
+  </a>
+</h3>

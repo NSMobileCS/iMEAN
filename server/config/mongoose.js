@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/doctorapps",
+mongoose.connect("mongodb://localhost/dataitems",
             {
                 useMongoClient: true,
              }
