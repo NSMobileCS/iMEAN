@@ -34,7 +34,10 @@ export class DataService {
 
   specItem(id, callback){
     this._http.get(`/items/${id}`).subscribe(
-      (userItem) => callback(userItem)
+      (userItem) => {
+        console.log(userItem);
+        callback(userItem)
+      }
     )
   }
 
@@ -45,6 +48,7 @@ export class DataService {
   }
 
   addNewAnswer(qID, answer){
+    console.log(`data service add answer: answer: ${answer}`);
     this._http.post(`/items/${qID}`, answer).subscribe(
       (res) => console.log(res)
     )

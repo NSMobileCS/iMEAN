@@ -80,21 +80,16 @@ module.exports = {
     },
 
     addNewAnswer: function (req, res) {
-        Question.find(
-            {_id: req.params.id},
-            (quest) => {
-                Answer.create(
-                    {
-                        answer: req.body.answer,
-                        _question: quest,
-                        answered_by: req.session.user
-                    },
-                    (err, ans) => {
-                        quest.answers.push(ans);
-                        quest.save();
-                        return res.json({OK:true});
-                    }
-                )
+        Answer.create(
+            {
+                answer: req.body.answer,
+                _question: quest,
+                answered_by: req.session.user
+            },
+            (err, ans) => {
+                // quest.answers.push(ans);
+                // quest.save();
+                return res.json(ans);
             }
         )
     },

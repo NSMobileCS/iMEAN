@@ -6,8 +6,7 @@
 <form #newForm="ngForm" (submit)="submitAnswer()">
   <label for="answer">Answer</label>
   <input type='textarea' required minlength="8" maxlength="800"
-  [(ngModel)]='newItem.answer'
-  #answ="ngModel" name="answer">
+  [(ngModel)]='newAnswer.answer' #answ="ngModel" name="answer">
 
 
   <button type="submit" [disabled]='!(answ.valid && newForm.valid)'>
