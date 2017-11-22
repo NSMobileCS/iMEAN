@@ -40,7 +40,8 @@ module.exports = {
                 if (err) {
                     console.log(`ERROR: controller singleItem ${err}`);
                 }
-                return res.json({username: req.session.user, items: items});
+                console.log(`controller.js returning item ${item}`);
+                return res.json({username: req.session.user, item: item});
             }
         )
     },

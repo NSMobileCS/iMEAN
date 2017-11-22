@@ -20,7 +20,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this._dataservice.allItems(
       (itemResp) => {
-        console.log(`dashboard component dataservice itemResp: ${itemResp}`)
+        // console.log(`dashboard component dataservice itemResp: ${itemResp}`);
         this.user['username'] = itemResp['username'];
         this.itemList = itemResp['items'];
       }
@@ -31,6 +31,10 @@ export class DashboardComponent implements OnInit {
     this._dataservice.logout(
       (res) => this._router.navigateByUrl('/')
     )
+  }
+
+  deleteItem(id){
+    this._dataservice.deleteItem(id);
   }
 
   ngOnInit() {

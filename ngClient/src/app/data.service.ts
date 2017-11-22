@@ -34,7 +34,7 @@ export class DataService {
 
   specItem(id, callback){
     this._http.get(`/items/${id}`).subscribe(
-      (item) => callback(item)
+      (userItem) => callback(userItem)
     )
   }
 
@@ -44,9 +44,8 @@ export class DataService {
     )
   }
 
-  deleteItem(id, callback){
+  deleteItem(id){
     this._http.post(`/items/${id}/destroy`, {'action': 'delete'}).subscribe(
-      (res) => callback(res)
     )
   }
 

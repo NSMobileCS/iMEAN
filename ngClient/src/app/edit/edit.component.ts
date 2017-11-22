@@ -9,7 +9,7 @@ import { DataService } from '../data.service';
 })
 export class EditComponent implements OnInit {
 
-  item: any = {
+  item = {
     item_name: '',
     added_by: '',
     description: '',
@@ -28,14 +28,16 @@ export class EditComponent implements OnInit {
         (params) => {
           this._dataservice.specItem(
             params.get('id'),
-            (item) => this.item = item
+            (userItem) => {
+              this.user.username = userItem['username'];
+              this.item.item_name = userItem['item']['item_name'];
+              this.item.added_by = userItem['item']['added_by'],
+              this.item.description = userItem['item']['description'],
+              this.item.quantity = Number(userItem['item']['quantity'])
+            }
           )
         }
       );
-      this._dataservice.login(
-        [],
-        (name) => this.user.username = name
-      )
    }
 
   ngOnInit() {
