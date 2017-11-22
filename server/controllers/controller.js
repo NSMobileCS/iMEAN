@@ -98,7 +98,7 @@ module.exports = {
     },
 
     upVote(req, res){
-        Answer.find(
+        Answer.findOne(
             { _id: req.params.id },
             (err, answ) => {
                 if (err) {
