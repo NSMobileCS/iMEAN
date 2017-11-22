@@ -31,13 +31,15 @@ module.exports = {
         let answers = [];
         Answer.find(
             {'_question': req.params.id},
-            (_answers) => answers = _answers
+            (_answers) => {
+                console.log(`_answers: ${_answers}`);
+                answers = _answers}
         );
         answers = answers.sort((a, b) => a.votes - b.votes);
         console.log(`answers: ${answers}`);
         Question.findOne(
             {_id: req.params.id},
-            (quest) => req.json({username: req.session.user, question: quest, answers: answers})
+            (quest) => res.json({username: req.session.user, question: quest, answers: answers})
         );
     },
 
@@ -66,17 +68,33 @@ module.exports = {
         }
     },
 
+    upVote(req, res){
+        Answer.findOne(
+            { _id: req.params.id },
+            (err, answ) => {
+                answ.votes += 1;
+                answ.save();
+                return res.json({'ok':true});
+            }
+        )
+    },
+
     addNewAnswer: function (req, res) {
-        Answer.create(
-            {
-                answer: req.body.answer,
-                _question: req.params.id,
-                answered_by: req.session.user
-            },
-            (err, newAnswer) => {
-                if (newAnswer) {
-                    return res.json({'ok':true})
-                }
+        Question.find(
+            {_id: req.params.id},
+            (quest) => {
+                Answer.create(
+                    {
+                        answer: req.body.answer,
+                        _question: quest,
+                        answered_by: req.session.user
+                    },
+                    (err, ans) => {
+                        quest.answers.push(ans);
+                        quest.save();
+                        return res.json({OK:true});
+                    }
+                )
             }
         )
     },

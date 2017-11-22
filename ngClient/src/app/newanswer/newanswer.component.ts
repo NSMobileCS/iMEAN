@@ -25,7 +25,14 @@ export class NewanswerComponent implements OnInit {
     private _dataservice: DataService,
     private _route: ActivatedRoute,
     private _router: Router
-  ) { }
+  ) {
+    this._route.params.subscribe(
+      (params) => {
+        this.user.username = params.get('user');
+        this.question = params.get('id');
+      }
+    )
+  }
 
   ngOnInit() {
   }

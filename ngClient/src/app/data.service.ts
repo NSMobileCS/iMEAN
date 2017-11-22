@@ -44,8 +44,14 @@ export class DataService {
     )
   }
 
-  addNewAnswer(qID, question){
-    this._http.post(`/items/${qID}/new`, question).subscribe(
+  addNewAnswer(qID, answer){
+    this._http.post(`/items/${qID}`, answer).subscribe(
+      (res) => console.log(res)
+    )
+  }
+
+  sendUpVote(answID){
+    this._http.get(`/vote/${answID}`).subscribe(
       (res) => console.log(res)
     )
   }

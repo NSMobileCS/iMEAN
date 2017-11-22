@@ -12,7 +12,7 @@ export class EditComponent implements OnInit {
   Q = {
     question: '',
     description: '',
-    answers: [{'answer': 'none', 'posted_by': 'none', 'votes': 0}]
+    answers: [{'answer': 'none', 'posted_by': 'none', 'votes': 0, '_id': '0000'}]
   };
 
   q_id = '';
@@ -27,8 +27,9 @@ export class EditComponent implements OnInit {
   ) {
       this._route.paramMap.subscribe(
         (params) => {
+          this.q_id = params.get('id'),
           this._dataservice.specItem(
-            params.get('id'),
+            this.q_id,
             (userItem) => {
               this.user.username = userItem['username'];
               this.Q.question = userItem['question']['question'];
@@ -40,7 +41,9 @@ export class EditComponent implements OnInit {
       );
    }
 
-
+  upVote(ansID){
+    this._dataservice.sendUpVote(ansID);
+  }
 
   ngOnInit() {
   }

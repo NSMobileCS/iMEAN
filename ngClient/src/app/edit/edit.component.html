@@ -1,34 +1,45 @@
-<h3>
-  <a [routerLink]="['/items']">Back to dashboard</a>
-</h3>
+<ul>
+  <li>
+    <a [routerLink]="['/items']">Back to dashboard</a>
+  </li>
+  <li>
+    <a [routerLink]="['/items', q_id, 'new', user.username]">Answer question</a>
+  </li>
+</ul>
 
 <h4>
-  {{ item.item_name }}
+  {{ Q.question }}
 </h4>
+<h5 *ngIf="Q.description.length > 0">
+  {{ Q.description }}
+</h5>
 <table>
   <tr>
+    <th>
+      Answer
+    </th>
+    <th>
+      Posted by
+    </th>
+    <th>
+      vote
+    </th>
+    <th>
+      votes
+    </th>
+  </tr>
+  <tr *ngFor="let ans of Q.answers">
     <td>
-      Description
+      {{ ans.answer }}
     </td>
     <td>
-      {{item.description}}
+      {{ ans.answered_by }}
+    </td>
+    <td>
+      <button (click)="upVote(ans._id);">upvote!</button>
+    </td>
+    <td>
+      {{ ans.votes }}
     </td>
   </tr>
-  <tr>
-    <td>
-      Added by
-    </td>
-    <td>
-      {{ item.added_by }}
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Quantity
-    </td>
-    <td>
-      {{ item.quantity }}
-    </td>
-  </tr>
-
 </table>
