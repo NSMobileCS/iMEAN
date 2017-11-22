@@ -19,34 +19,63 @@ module.exports = {
     },
 
     getAllItems: function (req, res) {
-        Question.find({}).populate('answers').exec(
+        Question.find(
+            {},
             (err, items) => {
                 if (err) { console.log(`controller. getAllAppts ERROR: ${err}`) }
-                return res.json({username: req.session.user, items: items});
+                console.log(items);
+                let quests = [];
+                for (let quest of items){
+                    Answer.find(
+                        {_question: quest._id},
+                        (err, qs) => {
+                            if (qs && qs.length > 0){
+                                quest['_nAnswers'] = qs.length;
+                            }
+                            else {
+                                quest['_nAnswers'] = 0;
+                            }
+                        }
+                    );
+                    quests.push(quest);
+                }
+                return res.json({username: req.session.user, items: quests});
             }
         )
     },
 
     singleItem: function(req, res){
         let answers = [];
+        let paramID = req.params.id;
         Answer.find(
-            {'_question': req.params.id},
-            (_answers) => {
+            {'_question': paramID},
+            (err, _answers) => {
                 console.log(`_answers: ${_answers}`);
-                answers = _answers}
+                answers = _answers;
+            }
         );
-        answers = answers.sort((a, b) => a.votes - b.votes);
+        if (answers){
+            answers = answers.sort((a, b) => b.votes - a.votes);
+        }
         console.log(`answers: ${answers}`);
         Question.findOne(
-            {_id: req.params.id},
-            (quest) => res.json({username: req.session.user, question: quest, answers: answers})
+            {_id: paramID},
+            (err, quest) => {
+                return res.json(
+                    {
+                        'username': req.session.user,
+                        'q': quest,
+                        'answers': answers
+                    }
+                )
+            }
         );
     },
 
     addNewItem: function (req, res) {
         console.log(req.body);
         if (!req.session.user){
-            console.log("ERROR: user error in addNewAppt")
+            console.log("ERROR: user error in addNewItem")
             return res.redirect('/');
         }
         else {
@@ -69,9 +98,12 @@ module.exports = {
     },
 
     upVote(req, res){
-        Answer.findOne(
+        Answer.find(
             { _id: req.params.id },
             (err, answ) => {
+                if (err) {
+                    console.log(`UPVOTE ERROR! err... #${err}`);
+                }
                 answ.votes += 1;
                 answ.save();
                 return res.json({'ok':true});
@@ -83,15 +115,17 @@ module.exports = {
         Answer.create(
             {
                 answer: req.body.answer,
-                _question: quest,
-                answered_by: req.session.user
+                _question: req.params.id,
+                answered_by: req.session.user,
+                votes: 0
             },
             (err, ans) => {
-                // quest.answers.push(ans);
-                // quest.save();
-                return res.json(ans);
+                if (err) {
+                    console.log(`ADD NEW ANSWER ERROR!! error... ${err}`);
+                }
+                return res.json({OK: true});
             }
-        )
+        );
     },
 
     deleteItem: function (req, res) {

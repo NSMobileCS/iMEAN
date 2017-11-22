@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
 })
 export class DashboardComponent implements OnInit {
 
-  user: object = { "username": 'anon'}
+  user = { "username": 'anon'}
 
   itemList: object[] = [];
 
@@ -20,9 +20,12 @@ export class DashboardComponent implements OnInit {
   ) {
     this._dataservice.allItems(
       (itemResp) => {
-        // console.log(`dashboard component dataservice itemResp: ${itemResp}`);
+        console.log(`dashboard component dataservice itemResp: ${itemResp}`);
         this.user['username'] = itemResp['username'];
         this.itemList = itemResp['items'];
+        this.itemList = this.itemList.sort(
+          (a,b) => b['_nAnswers'] - a['_nAnswers']
+        );
       }
     )
   }

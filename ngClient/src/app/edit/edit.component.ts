@@ -32,9 +32,15 @@ export class EditComponent implements OnInit {
             this.q_id,
             (userItem) => {
               this.user.username = userItem['username'];
-              this.Q.question = userItem['question']['question'];
-              this.Q.description = userItem['question']['description'];
-              this.Q.answers = userItem['question']['answers'];
+              if (userItem['q']['question'] && userItem['q']['question'].length > 0) {
+                this.Q.question = userItem['q']['question'];
+              }
+              if (userItem['q']['description'] && userItem['q']['description'].length > 0){
+                this.Q.description = userItem['q']['description'];
+              }
+              if (userItem['answers'] && userItem['answers'].length > 0) {
+                this.Q.answers = userItem['answers'];
+              }
             }
           )
         }

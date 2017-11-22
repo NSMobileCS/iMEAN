@@ -18,7 +18,7 @@
       {{ question.question }}
     </td>
     <td>
-        {{ question.answers.length }}
+        {{ question._nAnswers }}
      </td>
     <td>
       <a [routerLink]="['/items', question._id]">
