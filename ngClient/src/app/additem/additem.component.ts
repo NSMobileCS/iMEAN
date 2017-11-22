@@ -11,9 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AdditemComponent implements OnInit {
 
   newItem = {
-    item_name: '',
+    question: '',
     description: '',
-    quantity: 0,
     added_by: ''
   }
 

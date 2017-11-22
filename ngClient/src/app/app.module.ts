@@ -12,6 +12,7 @@ import { EditComponent } from './edit/edit.component';
 
 import { DataService } from './data.service';
 import { AdditemComponent } from './additem/additem.component';
+import { NewanswerComponent } from './newanswer/newanswer.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AdditemComponent } from './additem/additem.component';
     LoginComponent,
     DashboardComponent,
     EditComponent,
-    AdditemComponent
+    AdditemComponent,
+    NewanswerComponent
   ],
   imports: [
     BrowserModule,

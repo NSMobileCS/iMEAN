@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditComponent } from './edit/edit.component';
 import { LoginComponent } from './login/login.component';
 import { AdditemComponent } from './additem/additem.component';
+import { NewanswerComponent } from './newanswer/newanswer.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
   {
     path: 'items/:id',
     component: EditComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'items/:id/new/:user',
+    component: NewanswerComponent,
     pathMatch: 'full'
   }
 ];

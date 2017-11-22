@@ -9,12 +9,13 @@ import { DataService } from '../data.service';
 })
 export class EditComponent implements OnInit {
 
-  item = {
-    item_name: '',
-    added_by: '',
+  Q = {
+    question: '',
     description: '',
-    quantity: 0,
+    answers: [{'answer': 'none', 'posted_by': 'none', 'votes': 0}]
   };
+
+  q_id = '';
 
   user = { "username": 'anon'};
 
@@ -30,15 +31,16 @@ export class EditComponent implements OnInit {
             params.get('id'),
             (userItem) => {
               this.user.username = userItem['username'];
-              this.item.item_name = userItem['item']['item_name'];
-              this.item.added_by = userItem['item']['added_by'],
-              this.item.description = userItem['item']['description'],
-              this.item.quantity = Number(userItem['item']['quantity'])
+              this.Q.question = userItem['question']['question'];
+              this.Q.description = userItem['question']['description'];
+              this.Q.answers = userItem['question']['answers'];
             }
           )
         }
       );
    }
+
+
 
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const Item = mongoose.model("Item");
+const Question = mongoose.model("Question");
+const Answer = mongoose.model("Answer");
 
 
 module.exports = {
@@ -17,15 +18,8 @@ module.exports = {
         return res.status(200).json({"status":"OK"});
     },
 
-    checkLogin: function(req, res){
-        if (req.session.user){
-            return res.json(req.session.user);
-        }
-    },
-
     getAllItems: function (req, res) {
-        Item.find(
-            {},
+        Question.find({}).populate('answers').exec(
             (err, items) => {
                 if (err) { console.log(`controller. getAllAppts ERROR: ${err}`) }
                 return res.json({username: req.session.user, items: items});
@@ -34,16 +28,17 @@ module.exports = {
     },
 
     singleItem: function(req, res){
-        Item.findOne(
+        let answers = [];
+        Answer.find(
+            {'_question': req.params.id},
+            (_answers) => answers = _answers
+        );
+        answers = answers.sort((a, b) => a.votes - b.votes);
+        console.log(`answers: ${answers}`);
+        Question.findOne(
             {_id: req.params.id},
-            (err, item) => {
-                if (err) {
-                    console.log(`ERROR: controller singleItem ${err}`);
-                }
-                console.log(`controller.js returning item ${item}`);
-                return res.json({username: req.session.user, item: item});
-            }
-        )
+            (quest) => req.json({username: req.session.user, question: quest, answers: answers})
+        );
     },
 
     addNewItem: function (req, res) {
@@ -53,12 +48,10 @@ module.exports = {
             return res.redirect('/');
         }
         else {
-            Item.create(
+            Question.create(
                 {
-                    item_name: req.body.item_name,
+                    question: req.body.question,
                     description: req.body.description,
-                    added_by: req.body.added_by,
-                    quantity: req.body.quantity
                 },
                 (err, newAppt) => {
                     if (err) {
@@ -71,6 +64,21 @@ module.exports = {
                 }
             )
         }
+    },
+
+    addNewAnswer: function (req, res) {
+        Answer.create(
+            {
+                answer: req.body.answer,
+                _question: req.params.id,
+                answered_by: req.session.user
+            },
+            (err, newAnswer) => {
+                if (newAnswer) {
+                    return res.json({'ok':true})
+                }
+            }
+        )
     },
 
     deleteItem: function (req, res) {

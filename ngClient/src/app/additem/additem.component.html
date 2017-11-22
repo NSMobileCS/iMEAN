@@ -1,23 +1,20 @@
 <a [routerLink]="['/items']"><button>back to dashboard</button> </a>
 
-<h2>New Item Page</h2>
+<h2>New Question Page</h2>
 
 
 <form #newForm="ngForm" (submit)="addFormSend()">
-  <label for="item_name">Item name</label>
-  <input type='text' required minlength="4" maxlength="200"
-  [(ngModel)]='newItem.item_name'
-  #item_name="ngModel" name="item_name">
+  <label for="question">Question</label>
+  <input type='textarea' required minlength="10" maxlength="800"
+  [(ngModel)]='newItem.question'
+  #quest="ngModel" name="question">
 
   <label for="desc">description</label>
   <input type="textarea" required  maxlength="250"
   name='desc' [(ngModel)]='newItem.description' #desc='ngModel'>
 
-  <label for="quantity">quantity</label>
-  <input type="number" required
-  name='quantity' [(ngModel)]='newItem.quantity' #quantity='ngModel'>
 
-  <button type="submit" [disabled]='newForm.invalid'>
+  <button type="submit" [disabled]='(!quest.valid || !desc.valid)'>
     Submit
   </button>
 </form>

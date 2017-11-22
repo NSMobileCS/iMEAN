@@ -9,41 +9,26 @@
 
 <table>
   <tr>
-    <th>Item Name</th>
-    <th>Posted by</th>
-    <th>Description</th>
-    <th>Date Modified</th>
-    <th>Date Added</th>
-    <th>Quantity</th>
+    <th>Question</th>
+    <th>Answers</th>
     <th>Action</th>
   </tr>
-  <tr *ngFor="let item of itemList">
+  <tr *ngFor="let question of itemList">
     <td>
-        <a [routerLink]="['/items', item._id]">
-          {{ item.item_name }}
-        </a>
+      {{ question.question }}
     </td>
     <td>
-       {{ item.added_by }}
+        {{ question.answers.length }}
+     </td>
+    <td>
+      <a [routerLink]="['/items', question._id]">
+        <button>view</button>
+      </a>
     </td>
     <td>
-      {{ item.description }}
-    </td>
-    <td>
-      {{ item.updatedAt | date:'short' }}
-    </td>
-    <td>
-        {{ item.createdAt | date:'short' }}
-    </td>
-    <td>
-      <p *ngIf="user.username == item.added_by">
-        <button (click)="deleteItem(item._id)">
-          Delete Poll
-        </button>
-      </p>
-    </td>
-    <td>
-      {{ item.count }}
+      <a [routerLink]="['/items', question._id, 'new', user.username]">
+        <button>answer</button>
+      </a>
     </td>
   </tr>
 </table>
@@ -51,7 +36,7 @@
 <h3>
   <a [routerLink]="['/items', 'new', user.username]">
     <button>
-      add new item
+      add new question
     </button>
   </a>
 </h3>

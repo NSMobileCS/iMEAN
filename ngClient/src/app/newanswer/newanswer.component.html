@@ -1,0 +1,16 @@
+<a [routerLink]="['/items']"><button>back to dashboard</button> </a>
+
+<h2>New Answer Page</h2>
+
+
+<form #newForm="ngForm" (submit)="submitAnswer()">
+  <label for="answer">Answer</label>
+  <input type='textarea' required minlength="8" maxlength="800"
+  [(ngModel)]='newItem.answer'
+  #answ="ngModel" name="answer">
+
+
+  <button type="submit" [disabled]='!(answ.valid && newForm.valid)'>
+    Submit
+  </button>
+</form>

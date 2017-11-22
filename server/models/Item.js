@@ -1,16 +1,24 @@
 const mongoose = require('mongoose');
 
-
-const ItemSchema = new mongoose.Schema(
+const QuestionSchema = new mongoose.Schema(
     {
-        item_name: {type: String, required: true, minlength: 2},
-        description: {type: String, required: true, minlength: 3},
-        quantity: {type: Number, default: 0},
-        added_by: {type: String, required: true, minlength: 2, default: "anon"}
+        question: {type: String, required: true, minlength: 10},
+        description: {type: String, default: ''},
+        answers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Answer'}]
     },
     {
         timestamps: true
     }
 )
 
-mongoose.model('Item', ItemSchema)
+const AnswerSchema = new mongoose.Schema(
+    {
+        answer: {type: String, required: true, minlength: 5},
+        votes: {type: Number, default: 0},
+        answered_by: {type: String, required: true},
+        _question: {type: mongoose.Schema.Types.ObjectId, ref: 'Question'}
+    }
+)
+
+mongoose.model('Answer', AnswerSchema);
+mongoose.model('Question', QuestionSchema)

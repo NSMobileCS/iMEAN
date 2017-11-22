@@ -44,6 +44,12 @@ export class DataService {
     )
   }
 
+  addNewAnswer(qID, question){
+    this._http.post(`/items/${qID}/new`, question).subscribe(
+      (res) => console.log(res)
+    )
+  }
+
   deleteItem(id){
     this._http.post(`/items/${id}/destroy`, {'action': 'delete'}).subscribe(
     )
