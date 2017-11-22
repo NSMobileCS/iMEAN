@@ -106,6 +106,7 @@ module.exports = {
                 }
                 answ.votes += 1;
                 answ.save();
+                console.log(`UPVOTING... answ.votes: ${answ.votes}`);
                 return res.json({'ok':true});
             }
         )
